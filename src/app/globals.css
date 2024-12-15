@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border !scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button {
+    @apply active:outline-none;
+  }
+}
+
+@layer utilities {
+  .heading {
+    @apply font-bold text-4xl md:text-5xl text-center;
+  }
+  .head-text {
+    @apply sm:text-4xl text-3xl font-semibold;
+  }
+  .container {
+    @apply lg:max-w-5xl;
+  }
+
+  .c-space {
+    @apply sm:px-10 px-5;
+  }
+  /* about section */
+  .grid-container {
+    @apply w-full h-full border border-black-300  rounded-lg sm:p-7 p-4 flex flex-col gap-5;
+  }
+
+  .grid-headtext {
+    @apply text-xl font-semibold mb-2 text-white;
+  }
+
+  .grid-subtext {
+    @apply text-[#afb0b6] text-base;
+  }
+
+  .copy-container {
+    @apply cursor-pointer flex justify-center items-center gap-2;
+  }
+  /* clients section */
+  .client-container {
+    @apply grid md:grid-cols-2 grid-cols-1 gap-5 mt-12;
+  }
+
+  .client-review {
+    @apply rounded-lg md:p-10 p-5 col-span-1 bg-black-300 bg-opacity-50;
+  }
+
+  .client-content {
+    @apply flex lg:flex-row flex-col justify-between lg:items-center items-start gap-5 mt-7;
+  } /* contact section */
+  .contact-container {
+    @apply max-w-xl relative z-10 sm:px-10 px-5 mt-12;
+  }
+
+  .field-label {
+    @apply text-lg text-white-600;
+  }
+
+  .field-input {
+    @apply w-full bg-black-300 px-5 py-2 min-h-14 rounded-lg placeholder:text-white-500 text-lg text-white-800 shadow-black-200 shadow-2xl focus:outline-none;
+  }
+
+  .field-btn {
+    @apply px-5 py-2 min-h-12 rounded-lg shadow-black-200 shadow-2xl flex justify-center items-center text-lg text-white gap-3;
+  }
+
+  .field-btn_arrow {
+    @apply w-2.5 h-2.5 object-contain invert brightness-0;
+  }
+}
