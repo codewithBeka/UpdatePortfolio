@@ -63,14 +63,27 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
   /**
    * Load projects when the component mounts or the filter changes
    */
+  // Assuming Project type is already defined in your types
   useEffect(() => {
-    const loadProjects = async () => {
+    const loadProjects = async (): Promise<void> => {
       console.log("Active filter changed:", activeFilter); // Debug log
-      const fetchedProjects = await fetchProjects(1, activeFilter);
-      setProjects(fetchedProjects);
+
+      // Fetch projects with the current filter
+      const fetchedProjects: Project[] = await fetchProjects(1, activeFilter);
+
+      // Sort projects by createdAt (assuming createdAt is in ISO format)
+      const sortedProjects: Project[] = fetchedProjects.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+      setProjects(sortedProjects);
       setCurrentPage(1); // Reset page to 1 when the filter changes
     };
-    loadProjects();
+
+    loadProjects().catch((error) => {
+      console.error("Error loading projects:", error); // Handle any errors
+    });
   }, [activeFilter]);
 
   /**

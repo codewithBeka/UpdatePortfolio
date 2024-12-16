@@ -15,5 +15,7 @@ export interface Technology {
     simpleDescription: string;
     media: { url: string }[];
     category: Category; // Adjust this if the structure is different
-    technologies: Technology[];
+    technologies: Technology[];  
+    createdAt: string; // Ensure this property is included
+
   }
