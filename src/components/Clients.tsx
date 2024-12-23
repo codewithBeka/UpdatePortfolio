@@ -1,37 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { InfiniteMovingCards } from "./ui/InfiniteCards";
-import { fetchTestimonials } from "@/utils/backend";
 
-interface Testimonial {
-  quote: string;
-  name: string;
-  title: string;
-  rating: number;
-  profileImage: string;
-}
+type Props = {
+  testimonials: any[]; // Adjust type according to your testimonials structure
+  isLoading?: boolean;
+  error?: string;
+};
 
-const Clients: React.FC = () => {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadTestimonials = async () => {
-      try {
-        const data = await fetchTestimonials();
-        setTestimonials(data);
-      } catch (error) {
-        setError("Failed to fetch testimonials. Please try again later.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadTestimonials();
-  }, []);
-
+const Clients: React.FC<Props> = ({ testimonials, isLoading, error }) => {
   if (isLoading) {
     return (
       <section id="testimonials" className="py-20">

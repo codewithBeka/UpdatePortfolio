@@ -37,7 +37,7 @@ const Footer = () => {
                 width={20}
                 height={20}
                 className="w-auto h-auto"
-                priority // Maintain aspect ratiop
+                loading="lazy"
               />
             </Link>
           ))}

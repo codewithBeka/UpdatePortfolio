@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import { BentoTilt } from "./ui/BentoTilt";
 import { WorldMap } from "./ui/world-map";
@@ -30,7 +29,7 @@ const AboutMe = () => {
               height={376}
               style={{ objectFit: "cover", width: "auto", height: "auto" }}
               className="w-full sm:h-[276px] h-fit object-contain"
-              priority
+              loading="lazy"
             />
 
             <div>
@@ -62,7 +61,7 @@ const AboutMe = () => {
               height={276}
               style={{ objectFit: "cover", width: "auto", height: "auto" }}
               className="w-full sm:h-[276px] h-fit object-contain"
-              priority
+              loading="lazy"
             />
 
             <div>
@@ -116,6 +115,7 @@ const AboutMe = () => {
             <Image
               src="/clean.jpeg"
               alt="grid-3"
+              loading="lazy"
               width={266} // Set the width to match the desired size
               height={366} // Set the height to match the desired size
               style={{ objectFit: "cover" }} // Maintain cover for filling the space
@@ -151,7 +151,7 @@ const AboutMe = () => {
               height={276}
               style={{ objectFit: "cover", width: "auto", height: "auto" }}
               className="w-full md:h-[126px] sm:h-[276px] h-fit object-cover sm:object-top"
-              priority
+              loading="lazy"
             />
 
             <div className="space-y-2">
@@ -163,7 +163,7 @@ const AboutMe = () => {
                   height={36}
                   style={{ objectFit: "cover", width: "auto", height: "auto" }}
                   alt="copy"
-                  priority
+                  loading="lazy"
                 />
                 <p className="lg:text-2xl md:text-xl font-medium text-gray_gradient text-white">
                   walebereket37@gmail.com

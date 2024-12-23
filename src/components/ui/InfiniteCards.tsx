@@ -141,7 +141,7 @@ export const InfiniteMovingCards = ({
                     width={40} // Adjust based on your design
                     height={40} // Adjust based on your design
                     className="rounded-full"
-                    priority
+                    loading="lazy"
                   />
                 </div>
                 <span className="flex flex-col gap-1">

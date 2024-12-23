@@ -114,6 +114,7 @@ export function Service() {
                         width: "auto",
                         height: "auto",
                       }}
+                      loading="lazy"
                       className="z-0 w-full h-auto object-cover"
                     />
                   )}

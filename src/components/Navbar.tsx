@@ -72,7 +72,7 @@ function Navbar({}: Props) {
             width={48} // Set the desired width (12 * 4)
             height={48} // Set the desired height (12 * 4)
             className="object-contain h-12 w-12 rounded-full"
-            priority
+            loading="lazy"
           />
           <p className="text-white text-[18px] font-bold cursor-pointer flex ">
             Bereket &nbsp;

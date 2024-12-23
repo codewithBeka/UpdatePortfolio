@@ -17,6 +17,7 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null); // Error state
+  const [isLoadingProjects, setIsLoadingProjects] = useState<boolean>(false);
 
   const limit = 4; // Number of projects to display per request
 
@@ -38,7 +39,6 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
       const res = await fetch(
         `https://codewithbeka.onrender.com/api/projects?page=${page}&limit=${limit}${categoryQuery}`,
         {
-          cache: "force-cache",
           credentials: "include",
         }
       );
@@ -107,10 +107,10 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
   };
 
   // Loading states
-  if (isLoading && projects.length === 0) {
-    console.log("Loading projects for the first time..."); // Debug log
-    return <SkeletonLoader />; // Show loader while fetching projects
-  }
+  // if (isLoading && projects.length === 0) {
+  //   console.log("Loading projects for the first time..."); // Debug log
+  //   return <SkeletonLoader />; // Show loader while fetching projects
+  // }
 
   return (
     <section className="py-20 z-20" id="projects">
@@ -139,85 +139,96 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
           )
         )}
       </div>
-      <div className="flex  flex-wrap items-center justify-center  p-4 gap-14 md:gap-16 mt-3 ">
-        {projects.map((project) => (
-          <BentoTilt key={project._id} className="relative ">
-            <div className="lg:min-h-[32.5rem]  h-[25rem] flex items-center justify-center sm:w-96 w-[80vw]">
-              <div className="rounded-2xl  shadow-[0_8px_16px_rgb(0_0_0/0.4)] border border-white/[0.1] p-4 group-hover/pin:border-white/[0.2]   ">
-                <div className="relative flex items-center justify-center sm:w-96 w-[80vw]  overflow-hidden sm:h-[30vh] md:h-[25vh]  h-[30vh] xl:h-[35vh]  mb-10">
-                  <div
-                    className="relative w-full h-full  overflow-hidden lg:rounded-3xl"
-                    style={{ backgroundColor: "#13162D" }}
-                  >
+
+      {isLoadingProjects && projects.length === 0 ? (
+        <SkeletonLoader />
+      ) : (
+        <div className="flex  flex-wrap items-center justify-center  p-4 gap-14 md:gap-16 mt-3 ">
+          {projects.map((project) => (
+            <BentoTilt key={project._id} className="relative ">
+              <div className="lg:min-h-[32.5rem]  h-[25rem] flex items-center justify-center sm:w-96 w-[80vw]">
+                <div className="rounded-2xl  shadow-[0_8px_16px_rgb(0_0_0/0.4)] border border-white/[0.1] p-4 group-hover/pin:border-white/[0.2]   ">
+                  <div className="relative flex items-center justify-center sm:w-96 w-[80vw]  overflow-hidden sm:h-[30vh] md:h-[25vh]  h-[30vh] xl:h-[35vh]  mb-10">
+                    <div
+                      className="relative w-full h-full  overflow-hidden lg:rounded-3xl"
+                      style={{ backgroundColor: "#13162D" }}
+                    >
+                      <Image
+                        src="/bg.png"
+                        alt="background"
+                        fill={true} // Use fill to allow the image to fill the parent
+                        style={{ objectFit: "cover" }} // Control the object fit with CSS
+                        className="z-0"
+                        loading="lazy"
+                      />
+                    </div>
+
                     <Image
-                      src="/bg.png"
-                      alt="background"
-                      fill={true} // Use fill to allow the image to fill the parent
-                      style={{ objectFit: "cover" }} // Control the object fit with CSS
-                      className="z-0"
-                      priority
+                      src={project.media[0]?.url || "/bg.png"}
+                      alt="cover"
+                      fill // Use fill to allow the image to fill the parent
+                      style={{ objectFit: "cover", opacity: 0 }} // Control the object fit with CSS
+                      className="z-10 absolute bottom-0"
+                      loading="lazy"
+                      onLoad={(e) => {
+                        const target = e.currentTarget;
+                        target.style.opacity = "1"; // Fade in effect
+                      }}
                     />
                   </div>
 
-                  <Image
-                    src={project.media[0]?.url}
-                    alt="cover"
-                    fill={true} // Use fill to allow the image to fill the parent
-                    style={{ objectFit: "cover" }} // Control the object fit with CSS
-                    className="z-10 absolute bottom-0"
-                    priority
-                  />
-                </div>
+                  <h1 className="font-bold lg:text-2xl md:text-xl text-base line-clamp-1">
+                    {project.title}
+                  </h1>
+                  <p
+                    className="lg:text-xl lg:font-normal font-light text-sm line-clamp-2"
+                    style={{ color: "#BEC1DD", margin: "1vh 0" }}
+                  >
+                    {project.simpleDescription}
+                  </p>
 
-                <h1 className="font-bold lg:text-2xl md:text-xl text-base line-clamp-1">
-                  {project.title}
-                </h1>
-                <p
-                  className="lg:text-xl lg:font-normal font-light text-sm line-clamp-2"
-                  style={{ color: "#BEC1DD", margin: "1vh 0" }}
-                >
-                  {project.simpleDescription}
-                </p>
+                  <div className="flex items-center justify-between mt-7 mb-3">
+                    <div className="flex items-center">
+                      {project.technologies.map((tech, index) => (
+                        <div
+                          key={index}
+                          className="border border-white/[.2] rounded-full bg-black lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center"
+                        >
+                          <Image
+                            src={tech.image}
+                            alt={`Icon ${index + 1}`}
+                            width={40}
+                            height={40}
+                            style={{
+                              objectFit: "cover",
+                              width: "auto",
+                              height: "auto",
+                            }}
+                            loading="lazy"
+                            className="p-2"
+                          />
+                        </div>
+                      ))}
+                    </div>
 
-                <div className="flex items-center justify-between mt-7 mb-3">
-                  <div className="flex items-center">
-                    {project.technologies.map((tech, index) => (
-                      <div
-                        key={index}
-                        className="border border-white/[.2] rounded-full bg-black lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center"
-                      >
-                        <Image
-                          src={tech.image}
-                          alt={`Icon ${index + 1}`}
-                          width={40}
-                          height={40}
-                          style={{
-                            objectFit: "cover",
-                            width: "auto",
-                            height: "auto",
-                          }}
-                          className="p-2"
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex justify-center items-center">
-                    <Link href={`/project/${project._id}`}>
-                      <p className="flex lg:text-xl md:text-xs text-sm text-purple">
-                        Read More
-                      </p>
-                      {/* <FaLocationArrow className="ms-3" color="#CBACF9" /> */}
-                    </Link>
+                    <div className="flex justify-center items-center">
+                      <Link href={`/project/${project._id}`}>
+                        <p className="flex lg:text-xl md:text-xs text-sm text-purple">
+                          Read More
+                        </p>
+                        {/* <FaLocationArrow className="ms-3" color="#CBACF9" /> */}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </BentoTilt>
-        ))}
-      </div>{" "}
-      {error && <div className="text-red-500 text-center">{error}</div>}{" "}
-      {/* Display error message */}{" "}
+            </BentoTilt>
+          ))}
+        </div>
+      )}
+      {/* {isLoadingProjects && projects.length === 0 && <SkeletonLoader />} */}
+      {error && <div className="text-red-500 text-center">{error}</div>}
+      {/* Display error message */}
       {projects.length === 0 && !isLoading && !error && (
         <div className="text-center text-gray-500">
           No projects found for this category. Please try a different one.
