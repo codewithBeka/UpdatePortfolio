@@ -6,14 +6,13 @@ import Clients from "@/components/Clients";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import HeroParallaxDemo from "@/components/HeroParallaxDemo";
 import { Service } from "@/components/Service";
 import Marquee from "@/components/Skills";
 import toast, { Toaster } from "react-hot-toast";
 
 async function fetchCategories() {
   const res = await fetch(`https://codewithbeka.onrender.com/api/categories`, {
-    cache: "no-store", // Static fetch
+    cache: "force-cache", // Static fetch
     credentials: "include", // Include cookies and authentication data
   });
 
@@ -26,7 +25,7 @@ async function fetchCategories() {
 }
 async function fetchSkills() {
   const res = await fetch(`https://codewithbeka.onrender.com/api/skills`, {
-    cache: "no-store", // Static fetch
+    cache: "force-cache", // Static fetch
     credentials: "include", // Include cookies and authentication data
   });
 
@@ -41,7 +40,7 @@ async function fetchTestimonials() {
   const res = await fetch(
     `https://codewithbeka.onrender.com/api/testimonials`,
     {
-      cache: "no-store", // Static fetch
+      cache: "force-cache", // Static fetch
       credentials: "include", // Include cookies and authentication data
     }
   );
@@ -55,34 +54,27 @@ async function fetchTestimonials() {
 }
 
 export default async function Home() {
-  try {
-    const [categories, skills, testimonials] = await Promise.all([
-      fetchCategories(),
-      fetchSkills(),
-      fetchTestimonials(),
-    ]);
+  const categories = await fetchCategories();
+  const skills = await fetchSkills();
+  const testimonials = await fetchTestimonials();
 
-    return (
-      <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
-        <Toaster />
-        <div className="max-w-7xl w-full">
-          <Hero />
-          <Service />
-          {/* <HeroParallaxDemo /> */}
-          <AboutMe />
-          <Marquee skills={skills} />
-          <AllProjects categories={categories} />
-          <Clients testimonials={testimonials} />
-          <Approach />
-          <Contact />
-          <Footer />
-          {/*
-           */}
-        </div>
-      </main>
-    );
-  } catch (error) {
-    console.error("Error loading data:", error);
-    return <div>Error loading data. Please try again later.</div>;
-  }
+  return (
+    <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+      <Toaster />
+      <div className="max-w-7xl w-full">
+        <Hero />
+        <Service />
+        {/* <HeroParallaxDemo /> */}
+        <AboutMe />
+        <Marquee skills={skills} />
+        <AllProjects categories={categories} />
+        <Clients testimonials={testimonials} />
+        <Approach />
+        <Contact />
+        <Footer />
+        {/*
+         */}
+      </div>
+    </main>
+  );
 }
