@@ -248,7 +248,7 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
   );
 };
 
-// export default AllProjects;
+export default AllProjects;
 // ("use client");
 
 // import Image from "next/image";
