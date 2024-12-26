@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./provider";
 import Navbar from "@/components/Navbar";
 import ReduxProvider from "./ReduxProvider";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,8 +39,10 @@ export default function RootLayout({
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
-            <Navbar />
+          <ReactQueryProvider>
+             <Navbar />
             {children}
+          </ReactQueryProvider>
           </body>
         </ReduxProvider>
       </ThemeProvider>

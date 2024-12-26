@@ -13,7 +13,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 async function fetchCategories() {
   const res = await fetch(`https://codewithbeka.onrender.com/api/categories`, {
-    cache: "force-cache", // Static fetch
+    cache: "no-store", // Static fetch
     credentials: "include", // Include cookies and authentication data
   });
 
@@ -26,7 +26,7 @@ async function fetchCategories() {
 }
 async function fetchSkills() {
   const res = await fetch(`https://codewithbeka.onrender.com/api/skills`, {
-    cache: "force-cache", // Static fetch
+    cache: "no-store", // Static fetch
     credentials: "include", // Include cookies and authentication data
   });
 
@@ -41,7 +41,7 @@ async function fetchTestimonials() {
   const res = await fetch(
     `https://codewithbeka.onrender.com/api/testimonials`,
     {
-      cache: "force-cache", // Static fetch
+      cache: "no-store", // Static fetch
       credentials: "include", // Include cookies and authentication data
     }
   );
