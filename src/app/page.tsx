@@ -55,27 +55,34 @@ async function fetchTestimonials() {
 }
 
 export default async function Home() {
-  const categories = await fetchCategories();
-  const skills = await fetchSkills();
-  const testimonials = await fetchTestimonials();
+  try {
+    const [categories, skills, testimonials] = await Promise.all([
+      fetchCategories(),
+      fetchSkills(),
+      fetchTestimonials(),
+    ]);
 
-  return (
-    <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
-      <Toaster />
-      <div className="max-w-7xl w-full">
-        <Hero />
-        <Service />
-        {/* <HeroParallaxDemo /> */}
-        <AboutMe />
-        <Marquee skills={skills} />
-        <AllProjects categories={categories} />
-        <Clients testimonials={testimonials} />
-        <Approach />
-        <Contact />
-        <Footer />
-        {/*
-         */}
-      </div>
-    </main>
-  );
+    return (
+      <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+        <Toaster />
+        <div className="max-w-7xl w-full">
+          <Hero />
+          <Service />
+          {/* <HeroParallaxDemo /> */}
+          <AboutMe />
+          <Marquee skills={skills} />
+          <AllProjects categories={categories} />
+          <Clients testimonials={testimonials} />
+          <Approach />
+          <Contact />
+          <Footer />
+          {/*
+           */}
+        </div>
+      </main>
+    );
+  } catch (error) {
+    console.error("Error loading data:", error);
+    return <div>Error loading data. Please try again later.</div>;
+  }
 }
