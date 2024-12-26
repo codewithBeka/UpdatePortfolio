@@ -12,7 +12,13 @@ interface AllProjectsProps {
   categories: Category[];
 }
 
-const fetchProjects = async ({ pageParam = 1, activeFilter }: { pageParam?: number; activeFilter: string }) => {
+const fetchProjects = async ({
+  pageParam = 1,
+  activeFilter,
+}: {
+  pageParam?: number;
+  activeFilter: string;
+}) => {
   const categoryQuery =
     activeFilter !== "All"
       ? `&categoryName=${encodeURIComponent(activeFilter)}`
@@ -44,10 +50,10 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["projects", activeFilter],
-    queryFn: ({ pageParam = 1 }) =>
-      fetchProjects({ pageParam, activeFilter }),
+    queryFn: ({ pageParam = 1 }) => fetchProjects({ pageParam, activeFilter }),
     getNextPageParam: (lastPage, allPages) =>
       lastPage.projects.length > 0 ? allPages.length + 1 : undefined,
+    initialPageParam: 1, // Add this line
   });
 
   const handleFilterChange = (filter: string) => {
@@ -154,8 +160,6 @@ const AllProjects: React.FC<AllProjectsProps> = ({ categories }) => {
 };
 
 export default AllProjects;
-
-
 
 // "use client";
 
@@ -282,7 +286,7 @@ export default AllProjects;
 //             <div
 //               key={index}
 //               onClick={() => handleFilterChange(item)}
-//               className={`flex items-center justify-center p-2 rounded-md dark:border-white/[0.2] text-white font-bold cursor-pointer transition-all duration-300 m-2 
+//               className={`flex items-center justify-center p-2 rounded-md dark:border-white/[0.2] text-white font-bold cursor-pointer transition-all duration-300 m-2
 //                         ${
 //                           activeFilter === item
 //                             ? "bg-indigo-500 text-purple"
